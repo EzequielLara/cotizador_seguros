@@ -3,7 +3,10 @@ import './index.css';
 import Header from "./components/Header";
 import Formulario from "./components/Formulario";
 import Resumen from "./components/Resumen";
+import Resultado from "./components/Resultado";
 import styled from 'styled-components';
+import Spinner from './components/Spinner';
+
 
 const Contenedor = styled.div`
   max-width: 600px;
@@ -25,10 +28,11 @@ function App() {
       plan: ''
     }
   });
+
+  const [cargando, guardarCargando] = useState(false);
   
   //Destructuring
-  const { datos } = resumen;
-
+  const { datos, cotizacion } = resumen;
 
 
   return (
@@ -40,10 +44,17 @@ function App() {
       <ContenedorFormulario>
         <Formulario
             guardarResumen = {guardarResumen}
-        />
+            guardarCargando = {guardarCargando}
+        />  
         <Resumen
             datos = {datos}
         />
+        { !cargando ? <Resultado
+            cotizacion = {cotizacion}
+        /> : null }
+        <div className='centrar'>
+        {cargando ? <Spinner/> : null}
+        </div>
       </ContenedorFormulario>
     </Contenedor>
    </Fragment>
